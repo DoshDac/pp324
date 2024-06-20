@@ -2,6 +2,7 @@ package ru.kata.spring.boot_security.demo.configs;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.models.Role;
 import ru.kata.spring.boot_security.demo.models.User;
 import ru.kata.spring.boot_security.demo.repository.RoleRepository;
@@ -24,7 +25,8 @@ public class IniziBD {
     }
 
     @PostConstruct
-    private void initializeUsers() {
+    @Transactional
+    public void initializeUsers() {
         Role adminRole = new Role();
         adminRole.setRoleName("ROLE_ADMIN");
         roleRepository.save(adminRole);
