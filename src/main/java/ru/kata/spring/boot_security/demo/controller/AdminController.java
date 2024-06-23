@@ -1,12 +1,13 @@
 package ru.kata.spring.boot_security.demo.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.models.User;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/admin")
@@ -18,16 +19,18 @@ public class AdminController {
     }
 
     @GetMapping
-    public String showAllUsers(Model model) {
-        model.addAttribute("users", userService.showUsers());
+    public String showAllUsers(ModelMap modelMap) {
+        modelMap.addAttribute("users", userService.showUsers());
         return "admin/admin";
     }
 
     @GetMapping("/create")
-    public String addNewUser(Model model) {
+    public String addNewUser(ModelMap modelMap) {
         User user = new User();
-        model.addAttribute("user", user);
-        model.addAttribute("listRoles", userService.listRoles());
+        Map<String, Object> model = new HashMap<>();
+        model.put("user", user);
+        model.put("listRoles", userService.listRoles());
+        modelMap.addAllAttributes(model);
         return "admin/create";
     }
 
@@ -38,9 +41,11 @@ public class AdminController {
     }
 
     @GetMapping("/{id}/update")
-    public String updateUser(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("user", userService.getUser(id));
-        model.addAttribute("listRoles", userService.listRoles());
+    public String updateUser(@PathVariable("id") Long id, ModelMap modelMap) {
+        Map<String, Object> model = new HashMap<>();
+        model.put("user", userService.getUser(id));
+        model.put("listRoles", userService.listRoles());
+        modelMap.addAllAttributes(model);
         return "admin/update";
     }
 
