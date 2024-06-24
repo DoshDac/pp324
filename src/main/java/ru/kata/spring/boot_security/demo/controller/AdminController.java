@@ -1,5 +1,6 @@
 package ru.kata.spring.boot_security.demo.controller;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -19,17 +20,19 @@ public class AdminController {
     }
 
     @GetMapping
-    public String showAllUsers(ModelMap modelMap) {
+    public String showAllUsers(ModelMap modelMap, @AuthenticationPrincipal User user) {
         modelMap.addAttribute("users", userService.showUsers());
+        modelMap.addAttribute("user", user);
         return "admin/admin";
     }
 
     @GetMapping("/create")
-    public String addNewUser(ModelMap modelMap) {
-        User user = new User();
+    public String addNewUser(ModelMap modelMap, @AuthenticationPrincipal User user) {
+        User newUser = new User();
         Map<String, Object> model = new HashMap<>();
-        model.put("user", user);
+        model.put("user", newUser);
         model.put("listRoles", userService.listRoles());
+        model.put("currentUser", user);
         modelMap.addAllAttributes(model);
         return "admin/create";
     }
@@ -41,10 +44,11 @@ public class AdminController {
     }
 
     @GetMapping("/{id}/update")
-    public String updateUser(@PathVariable("id") Long id, ModelMap modelMap) {
+    public String updateUser(@PathVariable("id") Long id, ModelMap modelMap, @AuthenticationPrincipal User user) {
         Map<String, Object> model = new HashMap<>();
         model.put("user", userService.getUser(id));
         model.put("listRoles", userService.listRoles());
+        model.put("currentUser", user);
         modelMap.addAllAttributes(model);
         return "admin/update";
     }
