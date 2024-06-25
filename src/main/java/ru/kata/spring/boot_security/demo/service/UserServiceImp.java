@@ -31,6 +31,17 @@ public class UserServiceImp implements UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    @Override
+    @Transactional
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        User user = userRepository.findByEmail(email);
+        if (user == null) {
+            throw new UsernameNotFoundException(String.format("User '%s' not found", email));
+        }
+        return user;
+    }
+
+
     @Transactional
     public void save(User user) {
         user.setRoles(user.getRoles());
@@ -43,7 +54,7 @@ public class UserServiceImp implements UserService {
     }
 
     public User getUser(Long id) {
-        return userRepository.getOne(id);
+        return userRepository.getById(id);
     }
 
     @Transactional
@@ -58,22 +69,12 @@ public class UserServiceImp implements UserService {
         userRepository.save(user);
     }
 
-    public User findByUsername(String username) {
-        return userRepository.findByUsername(username);
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 
     @Transactional
     public List<Role> listRoles() {
         return roleRepository.findAll();
-    }
-
-    @Override
-    @Transactional
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
-        if (user == null) {
-            throw new UsernameNotFoundException(String.format("User '%s' not found ", username));
-        }
-        return user;
     }
 }

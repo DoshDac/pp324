@@ -53,20 +53,24 @@
     <h2 class="text-center mb-4">Создание пользователя</h2>
     <form th:method="POST" th:action="@{/admin/create}" th:object="${user}">
         <div class="form-group">
-            <label for="username">Имя пользователя</label>
-            <input type="text" class="form-control" th:field="*{username}" id="username">
+            <label for="firstName">Имя</label>
+            <input type="text" class="form-control" th:field="*{firstName}" id="firstName">
+        </div>
+        <div class="form-group">
+            <label for="lastName">Фамилия</label>
+            <input type="text" class="form-control" th:field="*{lastName}" id="lastName">
         </div>
         <div class="form-group">
             <label for="age">Возраст</label>
             <input type="text" class="form-control" th:field="*{age}" id="age">
         </div>
         <div class="form-group">
-            <label for="password">Пароль</label>
-            <input type="text" class="form-control" th:field="*{password}" id="password">
-        </div>
-        <div class="form-group">
             <label for="email">Email</label>
             <input type="text" class="form-control" th:field="*{email}" id="email">
+        </div>
+        <div class="form-group">
+            <label for="password">Пароль</label>
+            <input type="text" class="form-control" th:field="*{password}" id="password">
         </div>
         <div class="form-group row">
             <label class="col-4 col-form-label">Роли: </label>

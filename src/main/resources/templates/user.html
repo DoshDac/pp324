@@ -26,7 +26,9 @@
     <table class="table table-hover">
         <thead>
         <tr>
+            <th scope="col">ID</th>
             <th scope="col">Имя</th>
+            <th scope="col">Фамилия</th>
             <th scope="col">Возраст</th>
             <th scope="col">Пароль</th>
             <th scope="col">Email</th>
@@ -35,7 +37,9 @@
         </thead>
         <tbody>
         <tr th:object="${user}">
-            <td th:text="${user.getUsername()}"></td>
+            <td th:text="${user.getId()}"></td>
+            <td th:text="${user.getFirstName()}"></td>
+            <td th:text="${user.getLastName()}"></td>
             <td th:text="${user.getAge()}"></td>
             <td th:text="${user.getPassword()}"></td>
             <td th:text="${user.getEmail()}"></td>

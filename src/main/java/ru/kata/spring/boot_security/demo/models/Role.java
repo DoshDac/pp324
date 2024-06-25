@@ -10,8 +10,6 @@ import java.util.Objects;
 @AllArgsConstructor
 @Entity
 public class Role implements GrantedAuthority{
-    @Setter
-    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
