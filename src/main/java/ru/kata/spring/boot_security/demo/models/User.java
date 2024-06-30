@@ -42,13 +42,14 @@ public class User implements UserDetails {
     )
     private Set<Role> roles;
 
-    public User(String firstName, String lastName, Long age, String email, String password) {
+    public User(String firstName, String lastName, Long age, String email, String password, Set<Role> roles) {
+
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
         this.email = email;
         this.password = password;
-
+        this.roles = roles;
     }
 
     @Override
