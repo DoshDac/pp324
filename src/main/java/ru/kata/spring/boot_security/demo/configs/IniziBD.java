@@ -39,6 +39,7 @@ public class IniziBD {
         adminRoles.add(adminRole);
         adminRoles.add(userRole);
         User adminUser = new User("ali","tutu", 20L, "11", "11",adminRoles);
+
         userService.save(adminUser);
 
         Set<Role> userRoles = new HashSet<>();

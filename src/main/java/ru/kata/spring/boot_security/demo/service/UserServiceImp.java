@@ -13,22 +13,20 @@ import ru.kata.spring.boot_security.demo.repository.RoleRepository;
 import ru.kata.spring.boot_security.demo.repository.UserRepository;
 
 import java.util.List;
+import java.util.Optional;
+
+
 
 @Service
 public class UserServiceImp implements UserService {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
-    private PasswordEncoder passwordEncoder;
 
-    @Autowired
-    public UserServiceImp(UserRepository userRepository, RoleRepository roleRepository) {
+    public UserServiceImp(UserRepository userRepository, @Lazy PasswordEncoder passwordEncoder, RoleRepository roleRepository) {
         this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
-    }
-
-    @Autowired
-    public void setPasswordEncoder(@Lazy PasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
+        this.roleRepository = roleRepository;
     }
 
     @Override
@@ -43,10 +41,10 @@ public class UserServiceImp implements UserService {
 
 
     @Transactional
+    @Override
     public void save(User user) {
-        user.setRoles(user.getRoles());
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
+        userRepository.saveAndFlush(user);
     }
 
     public List<User> showUsers() {
@@ -63,11 +61,11 @@ public class UserServiceImp implements UserService {
     }
 
     @Transactional
+    @Override
     public void update(User user) {
-        user.setRoles(user.getRoles());
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
+        save(user);
     }
+
 
     public User findByEmail(String email) {
         return userRepository.findByEmail(email);
