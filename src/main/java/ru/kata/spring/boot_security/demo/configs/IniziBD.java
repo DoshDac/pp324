@@ -39,12 +39,11 @@ public class IniziBD {
         adminRoles.add(adminRole);
         adminRoles.add(userRole);
         User adminUser = new User("ali","tutu", 20L, "11", "11",adminRoles);
-
         userService.save(adminUser);
 
         Set<Role> userRoles = new HashSet<>();
         userRoles.add(userRole);
-        User regularUser = new User("turpal","tutu", 23L, "22", "22",userRoles);        regularUser.setRoles(userRoles);
+        User regularUser = new User("turpal","tutu", 23L, "22", "22",userRoles);
         userService.save(regularUser);
     }
 }
